@@ -1,6 +1,13 @@
+var background = document.getElementById('background');
+var text = document.getElementById('text');
+
 request('/photo', function(data){
-  document.getElementById('result').innerHTML = '<img src="'+data+'" class="photo">';
-  
+  background.style.backgroundImage = "url('"+data.photo+"')";
+  request('/quote', function(d){
+    d = JSON.parse(d);
+    console.log(d.quoteText);
+    text.innerHTML = d.quoteText;
+  });
 });
 
 function request(url, cb){
@@ -8,7 +15,7 @@ function request(url, cb){
   xmlHttp.open( "GET", url, false );
   xmlHttp.send( null );
   
-  var data = xmlHttp.responseText;
+  var data = JSON.parse(xmlHttp.responseText);
   
   cb(data);
 }

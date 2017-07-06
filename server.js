@@ -11,15 +11,14 @@ app.get('/', function(req, res){
 app.get('/photo', function(req, res){
   request('http://www.splashbase.co/api/v1/images/random', function(err, response, body){
     if(err) throw err;
-    console.log(body);
-    res.end(JSON.parse(body).url);
+    var obj = {'photo': JSON.parse(body).url}
+    res.end(JSON.stringify(obj));
   });
 });
 
 app.get('/quote', function(req, res){
   request('http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=json&lang=en', function(err, response, body){
     if(err) throw err;
-    console.log(body);
     res.end(JSON.stringify(body));
   });
 });
