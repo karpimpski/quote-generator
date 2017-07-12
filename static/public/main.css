@@ -3,9 +3,8 @@
   height: 100%;
   padding: 0;
   margin: 0;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
   align-items: center;
   display: flex;

@@ -11,6 +11,7 @@ app.get('/', function(req, res){
 app.get('/photo', function(req, res){
   request('http://www.splashbase.co/api/v1/images/random', function(err, response, body){
     if(err) throw err;
+    console.log(body);
     var obj = {'photo': JSON.parse(body).url}
     res.end(JSON.stringify(obj));
   });
