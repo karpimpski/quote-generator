@@ -18,7 +18,8 @@ app.get('/photo', function(req, res){
 });
 
 app.get('/quote', function(req, res){
-  request('http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=json&lang=en', function(err, response, body){
+  var number = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+  request('http://api.forismatic.com/api/1.0/?method=getQuote&key='+number+'&format=json&lang=en', function(err, response, body){
     if(err) throw err;
     res.end(JSON.stringify(body));
   });
