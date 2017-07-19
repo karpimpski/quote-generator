@@ -7,13 +7,25 @@ document.addEventListener('click', function(){
   setPage();
 });
 
+function getResources(cb){
+  request('/photo', function(photoData){
+    var photo = photoData.photo;
+    request('/quote', function(quoteData){
+      quoteData = JSON.parse(quoteData);
+      console.log(quoteData.quoteText);
+      var text = quoteData.quoteText;
+      cb({photo: photo, text: text});
+    });
+  });
+}
+
 function setPage(){
-  request('/photo', function(data){
-    background.style.backgroundImage = "url('"+data.photo+"')";
-    request('/quote', function(d){
-      d = JSON.parse(d);
-      console.log(d.quoteText);
-      text.innerHTML = d.quoteText;
+  getResources(function(first){
+    background.style.backgroundImage = "url('"+first.photo+"')";
+    text.innerHTML = first.text;
+    getResources(function(second){
+      background.style.backgroundImage = "url('"+second.photo+"')";
+      text.innerHTML = second.text;
     });
   });
 }
