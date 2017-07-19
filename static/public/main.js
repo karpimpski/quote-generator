@@ -21,12 +21,9 @@ document.addEventListener('click', function(){
 
 function getResources(cb){
   request('/photo', function(photoData){
-    var photo = photoData.photo;
     request('/quote', function(quoteData){
-      quoteData = JSON.parse(quoteData);
       console.log(quoteData.quoteText);
-      var text = quoteData.quoteText;
-      cb({photo: photo, text: text});
+      cb({photo: photoData.photo, text: quoteData.quoteText});
     });
   });
 }
