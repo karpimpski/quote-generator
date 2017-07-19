@@ -1,10 +1,22 @@
 var background = document.getElementById('background');
 var text = document.getElementById('text');
 
+var secondBackground = document.getElementById('second_background');
+var secondText = document.getElementById('second_text');
+
 setPage();
 
 document.addEventListener('click', function(){
-  setPage();
+  if(background.classList.contains('inactive')){
+    background.classList.remove('inactive');
+    secondBackground.classList.add('inactive');
+    resetPage(secondBackground, secondText)
+  }
+  else{
+    background.classList.add('inactive');
+    secondBackground.classList.remove('inactive');
+    resetPage(background, text);
+  }
 });
 
 function getResources(cb){
@@ -24,10 +36,20 @@ function setPage(){
     background.style.backgroundImage = "url('"+first.photo+"')";
     text.innerHTML = first.text;
     getResources(function(second){
-      background.style.backgroundImage = "url('"+second.photo+"')";
-      text.innerHTML = second.text;
+      secondBackground.style.backgroundImage = "url('"+second.photo+"')";
+      secondText.innerHTML = second.text;
     });
   });
+}
+
+function resetPage(bg, txt){
+  setTimeout(function(){
+    getResources(function(data){
+      bg.style.backgroundImage = "url('"+data.photo+"')";
+      txt.innerHTML = data.text;
+    });
+  }, 10);
+  
 }
 
 
