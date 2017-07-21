@@ -6,7 +6,12 @@ var secondText = document.getElementById('second_text');
 
 setPage();
 
-document.addEventListener('click', function(){
+document.addEventListener('click', clickFunction);
+
+function clickFunction(){
+  console.log('click');
+  document.removeEventListener('click', clickFunction);
+  console.log('gone');
   if(background.classList.contains('inactive')){
     background.classList.remove('inactive');
     secondBackground.classList.add('inactive');
@@ -17,7 +22,7 @@ document.addEventListener('click', function(){
     secondBackground.classList.remove('inactive');
     resetPage(background, text);
   }
-});
+}
 
 function getResources(cb){
   request('/photo', function(photoData){
@@ -44,9 +49,12 @@ function resetPage(bg, txt){
     getResources(function(data){
       bg.style.backgroundImage = "url('"+data.photo+"')";
       txt.innerHTML = data.text;
+      console.log('back');
+      setTimeout(function(){
+        document.addEventListener('click', clickFunction);
+      }, 20);
     });
   }, 10);
-  
 }
 
 
